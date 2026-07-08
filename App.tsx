@@ -1,20 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+
+import 'react-native-gesture-handler';
+import StackNavigator from "./src/navigation/StackNavigator";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+   console.log("API:", process.env.EXPO_PUBLIC_TMDB_API_KEY);
+  console.log("TOKEN:", process.env.EXPO_PUBLIC_TMDB_ACCESS_TOKEN);
+  return <StackNavigator />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
