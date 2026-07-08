@@ -2,15 +2,8 @@ import type { Movie } from '../types/movie';
 
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 
-function readEnv(name: string) {
-  return (globalThis as typeof globalThis & {
-    process?: { env?: Record<string, string | undefined> };
-  }).process?.env?.[name];
-}
-
-export const TMDB_API_KEY = readEnv('EXPO_PUBLIC_TMDB_API_KEY') || process.env.EXPO_PUBLIC_TMDB_API_KEY || '';
-export const TMDB_ACCESS_TOKEN =
-  readEnv('EXPO_PUBLIC_TMDB_ACCESS_TOKEN') || process.env.EXPO_PUBLIC_TMDB_ACCESS_TOKEN || '';
+export const TMDB_API_KEY = process.env.EXPO_PUBLIC_TMDB_API_KEY;
+export const TMDB_ACCESS_TOKEN =process.env.EXPO_PUBLIC_TMDB_ACCESS_TOKEN;
 
 interface TMDBPagedResponse<T> {
   page: number;
@@ -20,9 +13,11 @@ interface TMDBPagedResponse<T> {
 }
 
 async function tmdbRequest<T>(path: string, params: Record<string, string | number> = {}) {
-  if (!TMDB_ACCESS_TOKEN || TMDB_ACCESS_TOKEN.includes('YOUR_')) {
-    throw new Error('TMDB access token is not configured yet. Replace the placeholder value in src/api/tmdb.ts.');
-  }
+
+
+if (!TMDB_ACCESS_TOKEN) {
+  throw new Error("Token is empty");
+}
 
   const url = new URL(`${TMDB_BASE_URL}${path}`);
   url.searchParams.set('language', 'en-US');
